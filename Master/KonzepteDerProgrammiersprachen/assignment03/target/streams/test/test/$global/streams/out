@@ -1,0 +1,4 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PreprocLetTest, org.scalatest.tools.Framework$$anon$1@48bc4b0b, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(HigherOrderScalaTest, org.scalatest.tools.Framework$$anon$1@48bc4b0b, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(PreprocMultiargTest, org.scalatest.tools.Framework$$anon$1@48bc4b0b, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(HigherOrderMFAETTest, org.scalatest.tools.Framework$$anon$1@48bc4b0b, false, [SuiteSelector])[0m

@@ -1,0 +1,18 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mInterpreterTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- eval true[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- test false[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- negation of false[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- negation of true[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- conjunction TT[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- conjunction TF[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- conjunction FT[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- conjunction FF[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- disjunction TT[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- disjunction TF[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- disjunction FT[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- disjunction FF[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- double negation[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- recursive not[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- nested conjunction[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- nested disjunction[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- CNF[0m[0m

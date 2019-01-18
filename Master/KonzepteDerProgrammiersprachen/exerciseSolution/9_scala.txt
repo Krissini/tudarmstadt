@@ -1,0 +1,107 @@
+FUNOBJ:
+/**
+	* Created on 20.12.18.
+	*
+	* @author Mirko Köhler
+	*/
+object FunObj {
+
+	class O {
+		val f : Int = 2
+		def add1(x : Int)  = x + this.f
+	}
+
+	class O2 extends O {
+		override val f : Int = 3
+		def sub1(x : Int) = x - 1
+	}
+
+	//Obj = Symbol => Obj => _ => _
+	//An object takes a method identifier, a "this" object, and returns a function.
+	//The function represents a method or immutable field.
+	type Obj = Symbol => (_ => _ => _)
+
+	val obj1 : Obj = (m : Symbol) => m match {
+		case 'f => (ths : Obj) => (x  : Unit) => 2
+		case 'add1 => (ths : Obj) => (x : Int) => x +ths('f)
+			.asInstanceOf[Obj => Unit => _](ths)(()).asInstanceOf[Int]
+	}
+
+	val obj2 : Obj = (m : Symbol) => m match {
+		case 'f => (ths : Obj) => (x  : Unit) => 3
+		case 'sub1 => (ths : Obj) => (x : Int) => x - 1
+		case _ => (ths : Obj) => obj1(m).asInstanceOf[Obj => _ => _](ths)
+	}
+
+
+	def main(args :Array[String]): Unit = {
+		println(obj2('add1).asInstanceOf[Obj => Int => Int](obj2)(3))
+	}
+
+}
+
+
+
+OOINTERP:
+object OOInterp extends App {
+  
+  sealed trait OO
+  case class Id(x: Symbol) extends OO
+  case class New(cl: Symbol, fvals: List[OO]) extends OO
+  case class GetField(o: OO, field: Symbol) extends OO
+  case class Call(o: OO, method: Symbol, args: List[OO]) extends OO
+  case class Let(x : Symbol, namedExpr : OO, body : OO) extends OO
+
+  sealed trait Value
+  case class Object(cl: Symbol, fvals: List[Value]) extends Value
+
+  case class Class(fields: List[Symbol], methods: Map[Symbol, Method])
+  case class Method(params: List[Symbol], body: OO)
+
+  type Env = Map[Symbol, Value]
+  type ClassTable = Map[Symbol, Class]
+
+  def interp(e: OO, env: Env, ct: ClassTable): Value = e match {
+    case Id(x) => env(x)
+
+    case New(cl, fexps) =>
+      val fvals = fexps map (e => interp(e, env, ct))
+      Object(cl, fvals)
+
+
+    case GetField(oexp, field) =>
+      val Object(cl, fvals) = interp(oexp, env, ct)
+      val Class(fnames, _) = ct(cl)
+      val findex = fnames.indexOf(field)
+      fvals(findex)
+
+
+    case Call(oexp, method, args) =>
+      val rcv@Object(cl, _) = interp(oexp, env, ct)
+      val Class(_, methods) = ct(cl)
+      val Method(params, body) = methods(method)
+
+      val argVals = args map (e => interp(e, env, ct))
+      val paramEnv = Map() ++ (params zip argVals)
+      val envInvoke = paramEnv + ('this -> rcv)
+
+      interp(body, envInvoke, ct)
+
+    case Let(x, namedExpr, body) =>
+		  interp(body, env + (x -> interp(namedExpr, env, ct)), ct)
+
+  }
+
+
+	//We model x => x + 1 as object.
+	val ct = Map(
+		'Zero -> Class(Nil, Map.empty),
+		'Succ -> Class(List('pred), Map.empty),
+		//Fun is x => x + 1
+		'Fun -> Class(Nil, Map('apply -> Method(List('x), New('Succ, List(Id('x))))))
+	)
+
+
+
+
+}

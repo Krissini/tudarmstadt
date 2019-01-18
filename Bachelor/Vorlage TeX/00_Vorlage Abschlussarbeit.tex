@@ -1,0 +1,160 @@
+%Dokumentklasse
+\documentclass[a4paper,12pt]{scrreprt}
+\usepackage[top = 2.5 cm, left= 2.5cm, right = 2.5cm, bottom = 2.5 cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+% ============= Packages =============
+
+% Dokumentinformationen
+\usepackage[
+	pdftitle={Titel der Abschlussarbeit},
+	pdfsubject={},
+	pdfauthor={Euer Name},
+	pdfkeywords={},	
+	%Links nicht einrahmen
+	hidelinks
+]{hyperref}
+
+
+% Standard Packages
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx, subfig}
+\graphicspath{{img/}}
+\usepackage{fancyhdr}
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage{float}
+
+
+% zusätzliche Schriftzeichen der American Mathematical Society
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+%nicht einrücken nach Absatz
+%\setlength{\parindent}{0pt}
+
+
+% ============= Kopf- und Fußzeile =============
+\pagestyle{fancy}
+%
+\lhead{}
+\chead{}
+\rhead{\slshape \leftmark}
+%%
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+%%
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============= Package Einstellungen & Sonstiges ============= 
+%Besondere Trennungen
+\hyphenation{De-zi-mal-tren-nung}
+
+% ============= Package CodeBlock ============= 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+% ============= Dokumentbeginn =============
+
+\begin{document}
+%Seiten ohne Kopf- und Fußzeile sowie Seitenzahl
+\pagestyle{empty}
+
+\include{01_titel}
+
+\include{02_danksagungen}
+
+\include{03_zusammenfassung}
+
+% Beendet eine Seite und erzwingt auf den nachfolgenden Seiten die Ausgabe aller Gleitobjekte (z.B. Abbildungen), die bislang definiert, aber noch nicht ausgegeben wurden. Dieser Befehl fügt, falls nötig, eine leere Seite ein, sodaß die nächste Seite nach den Gleitobjekten eine ungerade Seitennummer hat. 
+\cleardoubleoddpage
+
+% pagestyle für gesamtes Dokument aktivieren
+\pagestyle{fancy}
+
+%Inhaltsverzeichnis
+\tableofcontents
+
+%Verzeichnis aller Bilder
+\listoffigures
+
+
+\include{04_einleitung}
+
+\include{05_grundlagen}
+
+
+
+\include{07_modellbildung}
+
+\include{075_simulation}
+
+\include{08_ergebnisse}
+
+\include{09_diskussion}
+
+% pagestyle für gesamtes Dokument aktivieren
+\pagestyle{fancy}
+
+
+\begin{thebibliography}{9}
+\bibitem[1] "Andreas Himmel, Viktoria Wiedmeyer, Juan Pablo Zometa, Michael Maiworm, 'oTToCAR', Otto-von-Guericke-Universität Magdeburg, Fakultät für Elektro- und Informationstechnik, Institut für Automatisierungstechnik, 29. November 2013
+
+\bibitem[2] "Christian Rathgeber, 'Trajektorienplanung und -folgeregelung für assistiertes bis hochautomatisiertes Fahren', Hvon der Fakultät V – Verkehrs- und Maschinensysteme der Technischen Universität Berlin, 2016
+
+\bibitem[3] "Dirk Reichardt, 'Kontinuierliche Verhaltenssteuerung eines autonomen Fahrzeugs in dynamischer Umgebung', Fachbereich Informatik der Universität Kaiserslautern, Januar 1996
+
+\bibitem[4] "Dieter Schramm, Manfred Hiller, Roberto Bardini 'Modellbildung und Simulation der Dynamik von Kraftfahrzeugen', von der Universität Duisburg-Essen, ISBN 978-3-540-89313-4, 2010
+
+\bibitem[5] "Fabian Freihube, 'Entwurf und Realisierung autonomer Fahrfunktionen in Modellfahrzeugen', HTWK Leipzig, Informatik, Mathematik und Naturwissenschaften, Oktober 2016
+
+\bibitem[6] "Hans Pacejka, 'Tire and Vehicle Dynamics', Chapter 2 'Vehicle Dynamics Modeling', ISBN 9780080970165, 9. April 2012
+
+\bibitem[7] "Magnus Rau, 'Koordination aktiver Fahrwerk-Regelsysteme zur Beeinflussung der Querdynamik mittels Verspannungslenkung', von der Fakultät Luft- und Raumfahrttechnik und Geodäsie der Universität Stuttgart, 01.06.2007
+
+\bibitem[8]{ml}"MathWorks Stundent Competition Team, 'Differential Drive', \url{https://www.mathworks.com/examples/simmechanics/community/31986-differential-drive}, 2018
+
+\bibitem[9] "Michael Graf, 'METHODE ZUR ERSTELLUNG UND ABSICHERUNG EINER MODELLBASIERTEN SOLLVORGABE FÜR FAHRDYNAMIKREGELSYSTEME', TECHNISCHE UNIVERSITÄT MÜNCHEN Fakultät für Maschinenwesen, Lehrstuhl für Fahrzeugtechnik, 27.06.2014
+
+\bibitem[10]{robot} O. Bittel, 'Kinematik mobiler Roboter', HTWG Konstanz, WS 17/18
+
+\bibitem[11] "Radionova L.V., Chernyshev A.D., 'Mathematical model of the vehicle in MATLAB Simulink', South Ural State University, 2015
+
+\bibitem[12]{bild1}Statistisches Bundesamt Deutschland: "'Verkehrsunfälle - Fachserie 8 Reihe 7 - 2016"': Getötete nach Ortslagen 1973 - 2016
+
+\bibitem[13]{link}Statistisches Bundesamt Deutschland: "'Fehlverhalten der Fahrzeugführer 2016"', \url{https://www.destatis.de/DE/ZahlenFakten/Wirtschaftsbereiche/TransportVerkehr/Verkehrsunfaelle/Verkehrsunfaelle.html}, 02.03.2018
+   
+\bibitem[14] "T. Bächle, K. Graichen,M. Buchholz, K. Dietmayer, 'Slip-Constrained Model Predictive Control Allocation for an All-Wheel Driven Electric Vehicle
+', Institute of Measurement, Control and Microtechnology, University of Ulm, August 24-29, 2014
+
+\end{thebibliography} 
+
+
+
+
+\end{document}

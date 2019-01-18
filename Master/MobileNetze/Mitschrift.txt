@@ -1,0 +1,6 @@
+1. network manager gestoppt, um  selbst zu konfigurieren, dann Monitor-Pc eingerichtet
+
+first exercise is trying to nake it work.
+Task1.:
+iperf --udp -c 192.168.100.2 port 5001 1M
+gibt keine Punkte. Bandwidth from router. Getestet mit verschiedenen Weten

@@ -1,0 +1,9 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mScalaWarmUpTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- flatten1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- flatten2[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- flatten3[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- flatten4[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- nil[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- singleton[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- reverse[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- dont use flatten for reverse[0m[0m

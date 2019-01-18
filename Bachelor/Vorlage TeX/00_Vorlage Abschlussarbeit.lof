@@ -1,0 +1,24 @@
+\select@language {ngerman}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Get\IeC {\"o}tete nach Ortslagen 1973 - 2016\cite {bild1}\relax }}{7}{figure.caption.6}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Fehlverhalten der Fahrzeugf\IeC {\"u}hrer\cite {link}\relax }}{8}{figure.caption.7}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces die f\IeC {\"u}nf Stufen der Automatisierung\relax }}{11}{figure.caption.8}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces inverse und direkte Kinematik\relax }}{13}{figure.caption.9}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Weltfestes- und Fahrzeugfestes Koordinatensystem\cite {robot}\relax }}{16}{figure.caption.10}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Lenkung entspricht Rotation um Momentanpol\cite {robot}\relax }}{17}{figure.caption.11}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces MATLAB Beispiel\relax }}{21}{figure.caption.12}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Pure Pursuit Veranschaulichung\cite {robot}\relax }}{22}{figure.caption.13}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Zusammenwirken des Dynamischen Reglers (Kapitel 4.1) und des Trajektorien Reglers (Kapitel 4.2)\relax }}{23}{figure.caption.14}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Logischer Aufbau unseres Modells\relax }}{24}{figure.caption.15}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Simulation - Blockschaltbild einfaches Modell\relax }}{25}{figure.caption.16}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Simulation - Ergebnis der Simulation der Kinematik\relax }}{25}{figure.caption.17}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Simulation - Vorgegebene Koordinaten abfahren\relax }}{26}{figure.caption.18}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Simulation - Ergebnis Punkte abfahren\relax }}{27}{figure.caption.19}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Versuchsaufbau der Ansteuerung des GPIO 17\relax }}{30}{figure.caption.20}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Sinusf\IeC {\"o}rmig ver\IeC {\"a}ndernde Helligkeit\relax }}{31}{figure.caption.21}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Bei der \IeC {\"U}berlagerung von Sinuskurve und S\IeC {\"a}gezahnf\IeC {\"o}rmigem Signal, kann erstere durch die Schnittpunkte in ein analoges PWM-Signal umwandeln Quelle: Wikipedia, \url {https://de.wikipedia.org/wiki/Pulsweitenmodulation}, stand 12.6.2018\relax }}{32}{figure.caption.22}
+\addvspace {10\p@ }

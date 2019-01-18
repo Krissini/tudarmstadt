@@ -1,0 +1,294 @@
+package de.tuda.copl
+
+import de.tuda.copl.ArithmeticExpressions._
+
+/*
+ * Exercise 02
+ */
+
+/*
+  Task 1: Interpreter for Arithmetic expressions
+
+  In this task, we will implement an interpreter that evaluates arithmetic expressions (+, *)
+  to Peano Numbers.
+*/
+object ArithmeticExpressions {
+
+	//Definition of natural numbers as peano numbers
+	sealed trait PeanoNumber {
+		def toInt: Int = this match {
+			case Zero => 0
+			case Succ(p) => p.toInt + 1
+		}
+
+		//Define + operator on Peano numbers
+		def +(other : PeanoNumber) : PeanoNumber =
+			add(this, other)
+
+		//Define * operator on peano numbers
+		def *(other : PeanoNumber) : PeanoNumber =
+			mul(this, other)
+	}
+
+	case object Zero extends PeanoNumber
+	case class Succ(pred: PeanoNumber) extends PeanoNumber
+
+	//Addition of Peano numbers (Solution of last homework)
+	def add(lhs : PeanoNumber, rhs : PeanoNumber) : PeanoNumber = lhs match {
+		case Zero => rhs
+		case Succ(n) => add(n, Succ(rhs))
+	}
+
+	/*
+	 * 1) Implement multiplication on Peano Numbers.
+	 */
+	def mul(lhs : PeanoNumber, rhs : PeanoNumber) : PeanoNumber = lhs match {
+		case Zero => Zero
+		case Succ(n) => (n * rhs) + rhs //Alternative syntax: add(mul(n, rhs), rhs)
+	}
+
+
+	/*
+	 * 2) Extend the Arithmetic expressions AE with multiplication. Then implement a interpreter
+	 *	  for AE.
+	 */
+	trait AE
+	case class Num(n: PeanoNumber) extends AE
+	case class Add(lhs: AE, rhs: AE) extends AE
+	case class Mul(lhs : AE, rhs : AE) extends AE
+	//Add multiplication...
+
+	def interp(ae: AE) : PeanoNumber = ae match {
+		case Num(n) => n
+		case Add(lhs, rhs) => add(interp(lhs), interp(rhs))
+		case Mul(lhs, rhs) => mul(interp(lhs), interp(rhs))
+	}
+
+
+	/*
+	 * 3) We extend the Arithmetic expression with Inc which increases the value of an arithmetic
+	 * 	  expression by 1. Write a preprocessor that transforms an arithmetic expression with Inc to
+	 *	  an expression that does not use Inc.
+	 */
+	case class Inc(e: AE) extends AE
+
+	def preprocess(ae : AE) : AE = ae match {
+		case Inc(e) => Add(Num(Succ(Zero)), preprocess(e))
+		case Num(_) => ae
+		case Add(lhs, rhs) => Add(preprocess(lhs), preprocess(rhs))
+		case Mul(lhs, rhs) => Mul(preprocess(lhs), preprocess(rhs))
+	}
+
+}
+
+
+/*
+ * Task 2: Programs
+ */
+object Programs {
+
+	sealed trait LAE
+	case class Num(n : Int) extends LAE
+	case class Add(lhs : LAE, rhs : LAE) extends LAE
+	case class Let(name : Symbol, namedExpr : LAE, body : LAE) extends LAE
+	case class Id(name : Symbol) extends LAE
+
+
+	/*
+	 * 1) Write a function 'progSize' that counts the number of AST nodes in a program.
+	 */
+
+	def progSize(p : LAE) : Int = p match {
+		case Num(_) => 1
+		case Id(_) => 1
+		case Add(e1, e2) => 1 + progSize(e1) + progSize(e2)
+		case Let(_, e, body) => 1 + progSize(e) + progSize(body)
+	}
+
+	/*
+	 * 2) Write a function 'freevars' that collects the free (unbound) variables of a program.
+	 */
+
+	def freeVars(p : LAE) : Set[Symbol] = p match {
+		case Num(_) => Set.empty
+		case Id(x) => Set(x)
+		case Add(e1, e2) => freeVars(e1) ++ freeVars(e2)
+		case Let(x, e, body) => freeVars(e) ++ (freeVars(body) - x)
+	}
+
+	/*
+	 * 3) Can you recognize similarities between 'progSize' and 'freevars'? Write a higher-order function 'foldProg' that
+	 *    abstracts over these similarities. Reimplement 'progSize' and 'freevars' in terms of 'foldProg'
+	 */
+	def foldProg[T](
+		numF : Int => T,
+		idF : Symbol => T,
+		addF : (T, T) => T,
+		letF : (Symbol, T, T) => T,
+		p : LAE) : T = {
+
+		def fold(pp : LAE) : T = foldProg(numF, idF, addF, letF, pp)
+
+		p match {
+			case Num(n) => numF(n)
+			case Id(x) => idF(x)
+			case Add(e1, e2) => addF(fold(e1), fold(e2))
+			case Let(x, e, body) => letF(x, fold(e), fold(body))
+		}
+	}
+
+	def progSizeFold(p : LAE) : Int = foldProg[Int](
+		n => 1,
+		x => 1,
+		(v1, v2) => 1 + v1 + v2,
+		(x, v0, v1) => 1+ v0 + v1,
+		p
+	)
+
+	def freeVarsFold(p : LAE) : Set[Symbol] = foldProg[Set[Symbol]](
+		n => Set.empty,
+		x => Set(x),
+		(v1, v2) => v1 ++ v2,
+		(x, v0, v1) => v0 ++ (v1 - x),
+		p
+	)
+
+
+	def main(args : Array[String]): Unit = {
+		val prog = Let('x, Add(Num(6), Num(3)), Add(Id('x), Num(1)))
+
+		println(progSize(prog))
+		println(progSizeFold(prog))
+	}
+
+}
+
+/*
+ * Task 3: Equivalence of Programs
+ */
+object LAEInterp {
+
+	import Programs._
+
+
+	def subst(expr: LAE, substId: Symbol, value: LAE): LAE = expr match {
+		case Num(_) => expr
+
+		case Add(lhs, rhs) =>
+			Add(subst(lhs, substId, value), subst(rhs, substId, value))
+
+		case Let(boundId, namedExpr, boundExpr) =>
+			val substNamedExpr = subst(namedExpr, substId, value)
+			if (boundId == substId)
+				Let(boundId, substNamedExpr, boundExpr)
+			else
+				Let(boundId, substNamedExpr, subst(boundExpr, substId, value))
+
+		case Id(name) =>
+			if (substId == name) value else expr
+	}
+
+	/*
+	 * 0) Is this interpreter eager or lazy?
+	 */
+	def interp(expr: LAE): Int = expr match {
+		case Num(n) => n
+		case Add(lhs, rhs) => interp(lhs) + interp(rhs)
+		case Let(boundId, namedExpr, boundExpr) =>
+			//Answer: We substitute the namedExpr without evaluating --> lazy interpreter
+			interp(substNew(boundExpr, boundId, namedExpr))
+
+		case Id(name) => sys.error("found unbound id " + name)
+	}
+
+	/*
+	 * 1) Would you say that the programs program1 and program2 are equal?
+	 *    What type of equivalences can you think of?
+	 */
+	val program1 =
+		Let('x, Num(2),
+			Let('y, Num(3),
+				Add(Id('x), Id('y))
+			)
+		)
+
+	val program2 =
+		Let('x, Num(2),
+			Let('y2, Num(3),
+				Add(Id('x), Id('y2))
+			)
+		)
+
+	val program3 = Num(5)
+
+	/*
+	 * We talked about three types of	equality:
+	 * - behavioral equivalence: When two programs evaluate to the same result then they are equal. In that sense, all three
+	 *   programs are equal. This equality definition blanks out the computation time that is needed for evaluating an
+	 *   expression.
+	 * - exact equivalence: Two programs are equal if they match exactly. None of the three provided programs are exactly
+	 *   equal to the other programs. This type of equality is often to restrictive to be useful.
+	 * - alpha equivalence: Two programs are equal when they match up to renaming of bound variables. Alpha equivalence
+	 *   is an important equivalence in the field of programming languages. But the importance of alpha equivalence is
+	 *   not just so that we can ignore the choice of bound variable names. We will see in that in the next task.
+	 */
+
+	/*
+	 * 2) Would you say that the programs program1b and program2b are equal?
+	 *    What is the problem?
+	 */
+	val program1b =
+		Let('x, Id('y),
+			Let('y, Num(3),
+				Add(Id('x), Id('y))
+			)
+		)
+
+	val program2b =
+		Let('x, Id('y),
+			Let('y2, Num(3),
+				Add(Id('x), Id('y2))
+			)
+		)
+
+	/*
+	 * These two programs evaluate differently with our current interpreter implementation.
+	 * program1b evaluates to 6
+	 * program2b does not evaluate (unbound identifier)
+	 *
+	 * The problem is that in the first case we are allowed to substitute an expression (Id('y)) that has y as a free
+	 * variable for x in a place where y is bound.
+	 *
+	 * We can change the substitution to check for that case:
+	 */
+	def substNew(expr: LAE, substId: Symbol, value: LAE): LAE = expr match {
+		case Num(_) => expr
+
+		case Add(lhs, rhs) =>
+			Add(substNew(lhs, substId, value), substNew(rhs, substId, value))
+
+		case Let(boundId, namedExpr, boundExpr) =>
+			val substNamedExpr = substNew(namedExpr, substId, value)
+			if (boundId == substId)
+				Let(boundId, substNamedExpr, boundExpr)
+			//This part is different:
+			else if (!freeVars(value).contains(boundId))
+				Let(boundId, substNamedExpr, substNew(boundExpr, substId, value))
+			else
+				sys.error("Can only substitute expression if the value does not contain the parameter as free variable")
+
+		case Id(name) =>
+			if (substId == name) value else expr
+	}
+	/*
+	 * The problem with this definition is that substitution is not totally defined, e.g. it is not defined when used
+	 * to interpret program1b. But we can always find an alpha-equivalent expression such that substitution is defined.
+   * That means that substitution can always be done without restrictions so long as some convenient alpha-equivalent
+   * renaming is done first! For example, if we change program1b to program2b then the substitution will not fail (when
+   * interpreting). The interpretation will still fail, because of an unbound identifier though.
+   *
+   * Outlook: Later in the course, we will see a language where the interpretation of an expression will not fail
+   * after alpha renaming.
+   */
+}
+

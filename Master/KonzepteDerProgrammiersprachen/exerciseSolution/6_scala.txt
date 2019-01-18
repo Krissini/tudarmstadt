@@ -1,0 +1,323 @@
+task 1:
+/**
+	* Created on 29.11.17.
+	*
+	* @author Mirko Köhler
+	*/
+
+// This file contains an interpreter for SCFLAE with non-recursive first-class
+// functions, conditionals, mutable boxes, variables and sequencing.
+object RSCFLAEInterp {
+
+	sealed abstract class RSCFLAE
+	case class Num(n: Int) extends RSCFLAE
+	case class Add(lhs: RSCFLAE, rhs: RSCFLAE) extends RSCFLAE
+	case class Let(name: Symbol, namedExpr: RSCFLAE, body: RSCFLAE) extends RSCFLAE
+	case class Id(name: Symbol) extends RSCFLAE
+	case class If0(test: RSCFLAE, posBody: RSCFLAE, negBody: RSCFLAE) extends RSCFLAE
+	case class Fun(param: Symbol, body: RSCFLAE) extends RSCFLAE
+	case class App(funExpr: RSCFLAE, argExpr: RSCFLAE) extends RSCFLAE
+	case class Seqn(e1: RSCFLAE, e2: RSCFLAE) extends RSCFLAE
+	case class SetId(id: Symbol, valueExpr: RSCFLAE) extends RSCFLAE
+	case class NewBox(valExpr: RSCFLAE) extends RSCFLAE
+	case class SetBox(boxExpr: RSCFLAE, valueExpr: RSCFLAE) extends RSCFLAE
+	case class OpenBox(boxExpr: RSCFLAE) extends RSCFLAE
+	case class Rec(name: Symbol, namedExpr: RSCFLAE, body: RSCFLAE) extends RSCFLAE
+
+	type Location = Int
+	var _currentLocation = 0
+
+	def nextLocation: Location = {
+		_currentLocation += 1
+		_currentLocation
+	}
+
+	type Env = Map[Symbol, Location]
+	type Store = Map[Location, Val]
+
+	sealed abstract class Val
+	case class NumV(n: Int) extends Val
+	case class Closure(param: Symbol, body: RSCFLAE, env: Env) extends Val
+	case class Box(location: Location) extends Val
+
+	def interp(
+		          expr: RSCFLAE,
+		          env: Env = Map(),
+		          store: Store = Map()): (Val, Store) = expr match {
+
+		case Num(n) => (NumV(n), store)
+
+		case Add(lhs, rhs) =>
+			val (lhsv, s1) = interp(lhs, env, store)
+			(lhsv, s1) match {
+				case (NumV(n1), _) =>
+					val (rhsv, s2) = interp(rhs, env, s1)
+					(rhsv, s2) match {
+						case (NumV(n2), _) => (NumV(n1 + n2), s2)
+						case _ => sys.error(
+							"can only add numbers, but got: %s and %s".format(lhsv, rhsv))
+					}
+
+				case _ => sys.error(
+					"can only add numbers, but got: '%s' as left hand side".format(lhsv))
+			}
+
+
+		case Let(boundId, namedExpr, boundBody) =>
+			val (namedVal, s1) = interp(namedExpr, env, store)
+			val newLoc = nextLocation
+			interp(boundBody, env + (boundId -> newLoc), s1 + (newLoc -> namedVal))
+
+
+		case Id(name) => (store(env(name)), store)
+
+		case Fun(arg, body) => (Closure(arg, body, env), store)
+
+		case If0(testExpr, thenExpr, elseExpr) =>
+			val (testV, s1) = interp(testExpr, env, store)
+			testV match {
+				case NumV(n) =>
+					if (n == 0) interp(thenExpr, env, s1)
+					else interp(elseExpr, env, s1)
+
+				case _ => sys.error("can only test numbers, but got: " + testV)
+			}
+
+
+		case App(funExpr, argExpr) =>
+			val (funV, funStore) = interp(funExpr, env, store)
+			val (argV, argStore) = interp(argExpr, env, funStore)
+			funV match {
+				case Closure(fParam, fBody, fEnv) =>
+					val newLoc = nextLocation
+					interp(fBody, fEnv + (fParam -> newLoc), argStore + (newLoc -> argV))
+
+				case _ => sys.error("can only apply functions, but got: " + funV)
+			}
+
+
+		case Seqn(e1, e2) =>
+			val (v1, s1) = interp(e1, env, store)
+			interp(e2, env, s1)
+
+
+		case NewBox(boxExpr) =>
+			val (boxV, boxStore) = interp(boxExpr, env, store)
+			val newLoc = nextLocation
+			(Box(newLoc), boxStore + (newLoc -> boxV))
+
+
+		case SetBox(boxExpr, valueExpr) =>
+			val (boxV, s1) = interp(boxExpr, env, store)
+			val (value, s2) = interp(valueExpr, env, s1)
+			boxV match {
+				case Box(loc) => (value, s2 + (loc -> value))
+				case _ => sys.error("can only set to boxes, but got: " + boxV)
+			}
+
+
+		case OpenBox(boxExpr) =>
+			val (boxV, s1) = interp(boxExpr, env, store)
+			boxV match {
+				case Box(loc) => (s1(loc), s1)
+				case _ => sys.error("can only open boxes, but got: " + boxV)
+			}
+
+
+		case SetId(id, valExpr) =>
+			val (value, s1) = interp(valExpr, env, store)
+			(value, s1 + (env(id) -> value))
+
+
+		case Rec(name, namedExpr, body) =>
+			val newLoc = nextLocation
+			val newEnv = env + (name -> newLoc)
+			val (namedVal, s1) = interp(namedExpr, newEnv, store)
+			interp(body, newEnv, s1 + (newLoc -> namedVal))
+
+	}
+}
+
+object Task1 extends App {
+
+	import RSCFLAEInterp._
+
+	// Some assertions on the interpreter
+	import scala.language.implicitConversions
+
+	implicit def idToSCFLAE(id: Symbol) = Id(id)
+	implicit def numToSCFLAE(n: Int) = Num(n)
+
+	def resetLocation: Location = {
+		_currentLocation = 0
+		_currentLocation
+	}
+
+	val sumProgram = Rec('sum,
+		Fun('x, If0('x, 0, Add('x, App('sum, Add(-1, 'x))))),
+		App('sum, 5)
+	)
+
+	println(interp(sumProgram))
+}
+
+
+
+
+task 2:
+package functions
+
+object DFLAEInterp {
+
+	sealed abstract class DFLAE
+	case class Num(n: Int) extends DFLAE
+	case class Add(lhs: DFLAE, rhs: DFLAE) extends DFLAE
+	case class Sub(lhs: DFLAE, rhs: DFLAE) extends DFLAE
+	case class Let(name: Symbol, namedExpr: DFLAE, body: DFLAE) extends DFLAE
+	case class Id(name: Symbol) extends DFLAE
+	case class Fun(param: Symbol, body: DFLAE) extends DFLAE
+	case class App(funExp: DFLAE, arg: DFLAE) extends DFLAE
+	case class Rec(name: Symbol, namedExpr: DFLAE, body: DFLAE) extends DFLAE
+
+	case class Cons(name: Symbol, args: List[DFLAE] = Nil) extends DFLAE
+	case class Match(expr: DFLAE, cases: List[(Symbol, List[Symbol], DFLAE)]) extends DFLAE
+
+
+	sealed trait Value
+	case class VNum(n: Int) extends Value
+	case class VClosure(param: Symbol, body: DFLAE, env: Env) extends Value
+	case class VCons(name: Symbol, args: List[Value]) extends Value
+
+
+	type Env = scala.collection.Map[Symbol, Value]
+
+
+	def interp(expr: DFLAE, env: Env = Map()): Value = expr match {
+		case Num(n) => VNum(n)
+
+		case Add(lhs, rhs) => (interp(lhs, env), interp(rhs, env)) match {
+			case (VNum(n1), VNum(n2)) => VNum(n1 + n2)
+			case v => sys.error(s"Expected numeric values but got $v")
+		}
+
+		case Sub(lhs, rhs) => (interp(lhs, env), interp(rhs, env)) match {
+			case (VNum(n1), VNum(n2)) => VNum(n1 - n2)
+			case v => sys.error(s"Expected numeric values but got $v")
+		}
+
+		case Let(boundId, namedExpr, boundBody) =>
+			interp(boundBody, env + (boundId -> interp(namedExpr, env)))
+
+		case Id(name) =>
+			env.getOrElse(name, sys.error(s"unbound variable $name"))
+
+		case Fun(param, body) =>
+			VClosure(param, body, env)
+
+		// funExpr can be an App:
+		//   App(App(Fun('x, 'x), Fun('y, 'y)), 5)
+		case App(funExpr, argExpr) => interp(funExpr, env) match {
+			case VClosure(param, body, funEnv) => {
+				val argVal = interp(argExpr, env)
+				val extendedEnv: Env = funEnv + (param -> argVal)
+				interp(body, extendedEnv)
+			}
+
+			case v1 => sys.error(s"Expected function value but got $v1")
+		}
+
+
+		case Rec(boundId, namedExpr, boundBody) => {
+			val recEnv = collection.mutable.Map() ++ env
+			recEnv += boundId -> interp(namedExpr, recEnv)
+			interp(boundBody, recEnv)
+		}
+
+
+		case Cons(name, args) =>
+			VCons(name, args.map(interp(_, env)))
+
+		case Match(expr, cases) => interp(expr, env) match {
+			case value@VCons(name, argValues) =>
+
+				val interpretedValue: Option[Value] = cases.collectFirst({
+					case (caseName, caseSymbols, caseExpr) if caseName == name && argValues.length == caseSymbols.length =>
+						val newEnv = env ++ (caseSymbols zip argValues)
+						interp(caseExpr, newEnv)
+				})
+
+				interpretedValue match {
+					case None => sys.error(s"Could not find match for $value in $cases")
+					case Some(v) => v
+				}
+
+			case v => sys.error(s"Expected data value but got $v")
+		}
+	}
+}
+
+
+object Task2 extends App {
+
+	import DFLAEInterp._
+
+  // some assertions on the interpreter
+  import scala.language.implicitConversions
+
+  implicit def symbolToFLAE(symbol: Symbol) : Id = Id(symbol)
+  implicit def intToFLAE(n: Int) : Num = Num(n)
+
+
+	//Define Bool data type
+	val trueE = Cons('true)
+	val falseE = Cons('false)
+
+	//Define natural numbers
+	val zero = Cons('zero)
+	val one = Cons('succ, List(zero))
+	val two = Cons('succ, List(one))
+
+	//Define lists
+	val nil = Cons('nil)
+	val list = Cons('cons, List(two, Cons('cons, List(one, Cons('cons, List(zero, nil)))))) //(2, 1, 0)
+
+	//Define length of a list
+	val lengthProgram =
+		Rec('length,
+			Fun('list,
+				Match('list, List(
+					('nil, Nil, 0),
+					('cons, List('x, 'xs), Add(1, App('length, 'xs)))
+				))
+			),
+			App('length, list)
+		)
+
+
+	//Define a function that filters out zeros
+	val isNotZero = Fun('n, Match('n, List(
+		('zero, List(), falseE),
+		('succ, List('prev), trueE))))
+
+	//Define function filterNatList with f as fixed point
+	val filterProgram =
+		Rec('filter,
+			Fun('predicate, Fun('list, Let('filterRec, Fun('x, App(App('filter, 'predicate), 'x)),
+				Match('list, List(
+					('nil, List(), nil),
+					('cons, List('x, 'xs), Match(App('predicate, 'x), List(
+						('false, List(), App('filterRec, 'xs)),
+						('true, List(), Cons('cons, List('x, App('filterRec, 'xs))))
+					)))
+				))
+			))),
+			App(App('filter, isNotZero), list)
+		)
+
+
+
+	//Interpret and print results
+	println(interp(lengthProgram))
+	println(interp(filterProgram))
+
+}

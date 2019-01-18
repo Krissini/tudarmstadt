@@ -1,0 +1,23 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mPreprocessorTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- imp[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested imp lhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected Or(Not(Or(Not(False),True)),True), but got Or(Not(Imp(False,True)),True) (task2_PreprocessorTest.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested imp rhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected Or(Not(True),Or(Not(True),True)), but got Or(Not(True),Imp(True,True)) (task2_PreprocessorTest.scala:13)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- bi imp[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested bi imp lhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected And(Or(Not(True),Or(Not(False),True)),Or(Not(Or(Not(False),True)),True)), but got And(Or(Not(True),Imp(False,True)),Or(Not(Imp(False,True)),True)) (task2_PreprocessorTest.scala:15)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested bi imp rhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected And(Or(Not(Or(Not(False),True)),False),Or(Not(False),Or(Not(False),True))), but got And(Or(Not(Imp(False,True)),False),Or(Not(False),Imp(False,True))) (task2_PreprocessorTest.scala:16)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested in not *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected Not(Or(Not(True),True)), but got Not(Imp(True,True)) (task2_PreprocessorTest.scala:17)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested in and lhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected And(Or(Not(False),True),True), but got And(Imp(False,True),True) (task2_PreprocessorTest.scala:18)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested in and rhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected And(True,Or(Not(False),True)), but got And(True,Imp(False,True)) (task2_PreprocessorTest.scala:19)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested in or lhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected Or(Or(Not(False),True),True), but got Or(Imp(False,True),True) (task2_PreprocessorTest.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- nested in or rhs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected Or(True,Or(Not(False),True)), but got Or(True,Imp(False,True)) (task2_PreprocessorTest.scala:21)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- true[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- false[0m[0m

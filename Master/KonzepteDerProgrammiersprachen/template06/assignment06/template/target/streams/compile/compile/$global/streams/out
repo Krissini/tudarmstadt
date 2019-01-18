@@ -1,0 +1,6 @@
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\fredd\Desktop\uni\Master\KonzepteDerProgrammiersprachen\template06\assignment06\template\src\main\scala\CallByReferenceArgumentsInterpreter.scala:37:68: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: Ref(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def interp(expr: SCFLAE, env: Env, store: Store): (Val, Store) = expr match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mthere were two feature warnings; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

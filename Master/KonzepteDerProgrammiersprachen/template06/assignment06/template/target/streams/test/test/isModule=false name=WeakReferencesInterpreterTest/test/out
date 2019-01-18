@@ -1,0 +1,112 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mWeakReferencesInterpreterTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- correct WeakRef *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(Num(42)) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$1(WeakReferencesInterpreterTest.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- invalidates location for WeakRefV on gc *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRefV(0) (of class WeakReferencesInterpreter$WeakRefV)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$MarkAndSweepStore.allAddrInVal(WeakReferencesInterpreter.scala:55)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$MarkAndSweepStore.$anonfun$allAddrInEnv$1(WeakReferencesInterpreter.scala:71)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$MarkAndSweepStore.$anonfun$allAddrInEnv$1$adapted(WeakReferencesInterpreter.scala:66)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.TraversableOnce.$anonfun$foldRight$1(TraversableOnce.scala:161)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.TraversableOnce.foldRight(TraversableOnce.scala:161)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.TraversableOnce.foldRight$(TraversableOnce.scala:160)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.AbstractIterator.foldRight(Iterator.scala:1425)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.IterableLike.foldRight(IterableLike.scala:81)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.IterableLike.foldRight$(IterableLike.scala:80)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.AbstractIterable.foldRight(Iterable.scala:54)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- WeakRef and successful Deref *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(Num(42)) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$3(WeakReferencesInterpreterTest.scala:27)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- WeakRef and unsuccessful Deref *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(Num(42)) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$4(WeakReferencesInterpreterTest.scala:39)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Nested WeakRefs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(WeakRef(Num(42))) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$5(WeakReferencesInterpreterTest.scala:51)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- GC WeakRef itself and referenced value *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(Num(42)) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:234)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$6(WeakReferencesInterpreterTest.scala:62)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Multiple GCs and forward references *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(Num(42)) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$7(WeakReferencesInterpreterTest.scala:78)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- no referential equality of invalidated WeakRefs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: WeakRef(Num(42)) (of class WeakReferencesInterpreter$WeakRef)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreter$.interp(WeakReferencesInterpreter.scala:190)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at WeakReferencesInterpreterTest.$anonfun$new$9(WeakReferencesInterpreterTest.scala:105)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- NewBox and OpenBox[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Fun and Seq[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If0 & SetBox[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If0 & SetId[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Multiple Boxes[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Correct Seqn return value[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- test7[0m[0m

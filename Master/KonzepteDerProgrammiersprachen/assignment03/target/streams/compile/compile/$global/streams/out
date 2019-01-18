@@ -1,0 +1,6 @@
+[0m[[0m[31merror[0m] [0m[0mC:\Users\fredd\Desktop\uni\KonzepteDerProgrammiersprachen\assignment03\src\main\scala\task1_PreprocLet.scala:10:14: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Unit[0m
+[0m[[0m[31merror[0m] [0m[0m required: definitions.FAEBase.FAE[0m
+[0m[[0m[31merror[0m] [0m[0m    case add => [0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

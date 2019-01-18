@@ -1,0 +1,18 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mFibonacciTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- test0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- test1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test2 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 1, but got 2 (FibonacciTest.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test3 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 2, but got 3 (FibonacciTest.scala:26)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test4 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 3, but got 4 (FibonacciTest.scala:32)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- test5[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test6 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 8, but got 6 (FibonacciTest.scala:44)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test7 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 13, but got 7 (FibonacciTest.scala:50)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test8 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 21, but got 8 (FibonacciTest.scala:56)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- test9 *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected 34, but got 9 (FibonacciTest.scala:62)[0m[0m

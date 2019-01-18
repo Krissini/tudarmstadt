@@ -1,0 +1,111 @@
+object Ex08 extends App {
+
+  case class EndOfWorld(arg:Any) extends Throwable
+
+//--------------------------------------------------------------------------------
+// Task 2.1 (sum)
+//--------------------------------------------------------------------------------
+  def sum(n: Int, k: Int => Nothing): Nothing = {
+    if (n == 0)
+      k(0)
+    else
+      sum(n - 1, { res => k(n + res)})
+  }
+
+  try sum(10, res => throw EndOfWorld(res)) catch {
+      case EndOfWorld(arg) => println(arg);
+  } //should print 55
+
+//--------------------------------------------------------------------------------
+// Task 2.2 (sort)
+//--------------------------------------------------------------------------------
+ 
+  def insert(elem: Int, list: List[Int], k: List[Int] => Nothing): Nothing = {
+    list match {
+      case x :: xs =>
+        if (elem < x)
+          k(elem :: list)
+        else
+          insert(elem, xs, {res => k(x :: res)})
+      case Nil => k(List(elem))
+    }
+  }
+
+  def insertionSort(list : List[Int], k: List[Int] => Nothing): Nothing = {
+    list match {
+      case x :: xs => insertionSort(xs, { res => insert(x, res, k) })
+      case Nil => k(Nil)
+    }
+  }
+  
+  val testList = List(5,3,9,0,6,1,4,2,8,7)
+  try insertionSort(testList, res => throw EndOfWorld(res)) catch {
+      case EndOfWorld(arg) => println(arg);
+  }
+
+//--------------------------------------------------------------------------------
+
+  def merge(left: List[Int], right: List[Int], k: List[Int] => Nothing): Nothing =
+    (left, right) match {
+    case (x :: xs, y :: ys) =>
+      if (x < y)
+        merge(xs, right, 
+          { res => k(x :: res) })
+      else
+        merge(left, ys, 
+          { res => k(y :: res) })
+    case (Nil, _) => k(right)
+    case (_, Nil) => k(left)
+  }
+
+  def mergeSort(list: List[Int], k: List[Int] => Nothing): Nothing = {
+    if (list.size < 2)
+      k(list)
+    else {
+      val (left, right) = list.splitAt(list.size / 2)
+      mergeSort(left, 
+        { resLeft => mergeSort(right,
+          { resRight => merge(resLeft, resRight, k) })})
+    }
+  }
+
+  try mergeSort(testList, res => throw EndOfWorld(res)) catch {
+      case EndOfWorld(arg) => println(arg);
+  }
+
+//--------------------------------------------------------------------------------
+// Task 2.3 (number of case class nodes)
+//--------------------------------------------------------------------------------
+ 
+  sealed abstract class FAE
+  case class Num(n: Int) extends FAE
+  case class Add(lhs: FAE, rhs: FAE) extends FAE
+  case class Sub(lhs: FAE, rhs: FAE) extends FAE
+  case class Id(name: Symbol) extends FAE
+  case class Fun(param: Symbol, bodyExpr: FAE) extends FAE
+  case class App(funExpr: FAE, argExpr: FAE) extends FAE
+
+  def countFAE(expr: FAE, k: Int => Nothing): Nothing =
+    expr match {
+      case Num(_) => k(1)
+      case Add(lhs, rhs) => countFAE(lhs,
+        { resLeft => countFAE(rhs,
+          { resRight => k(resLeft + resRight + 1) })})
+      case Sub(lhs, rhs) => countFAE(lhs,
+        { resLeft => countFAE(rhs,
+          { resRight => k(resLeft + resRight + 1) })})
+      case Id(_) => k(1)
+      case Fun(_, bodyExpr) => countFAE(bodyExpr,
+        { res => k(res + 1) })
+      case App(funExpr, argExpr) => countFAE(funExpr,
+        { resFun => countFAE(argExpr,
+      	  { resArg => k(resFun + resArg + 1) })})
+  }
+
+  val example = App(Fun('x, Add(Id('x), Id('x))),
+                Sub(Num(2), Num(1)))
+    
+  try countFAE(example, res => throw EndOfWorld(res)) catch {
+      case EndOfWorld(ret) => println(ret);
+  } // should print 8
+}

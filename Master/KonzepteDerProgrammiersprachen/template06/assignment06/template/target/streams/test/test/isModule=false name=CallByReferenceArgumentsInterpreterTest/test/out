@@ -1,0 +1,60 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mCallByReferenceArgumentsInterpreterTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- simple set[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- nested set[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- non-ref swap[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- boxes as variable values[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- functions as variable values[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- side effects on right side of assignment[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- error on Ref in non-arg/home/spilot/Uni/bachelors/src/SOMns position[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- ref swap *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.interp(CallByReferenceArgumentsInterpreter.scala:77)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.interp(CallByReferenceArgumentsInterpreter.scala:92)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.eval(CallByReferenceArgumentsInterpreter.scala:35)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreterTest.$anonfun$new$9(CallByReferenceArgumentsInterpreterTest.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- using ref as r-value *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.interp(CallByReferenceArgumentsInterpreter.scala:77)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.eval(CallByReferenceArgumentsInterpreter.scala:35)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreterTest.$anonfun$new$10(CallByReferenceArgumentsInterpreterTest.scala:92)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- function as reference argument *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.interp(CallByReferenceArgumentsInterpreter.scala:77)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.interp(CallByReferenceArgumentsInterpreter.scala:80)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.eval(CallByReferenceArgumentsInterpreter.scala:35)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreterTest.$anonfun$new$11(CallByReferenceArgumentsInterpreterTest.scala:99)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- evaluation of function part of application extends store *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.interp(CallByReferenceArgumentsInterpreter.scala:77)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreter$.eval(CallByReferenceArgumentsInterpreter.scala:35)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at CallByReferenceArgumentsInterpreterTest.$anonfun$new$12(CallByReferenceArgumentsInterpreterTest.scala:106)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m

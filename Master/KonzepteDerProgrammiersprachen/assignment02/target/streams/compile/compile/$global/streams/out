@@ -1,0 +1,9 @@
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\fredd\Desktop\uni\KonzepteDerProgrammiersprachen\assignment02\src\main\scala\task2_implementing_and_using_extended_F1LAE\ExtendedF1LAE.scala:30:52: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: If0(_, _, _)[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def interp(expr: F1LAE, funDefs: FunDefs): Int = expr match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\fredd\Desktop\uni\KonzepteDerProgrammiersprachen\assignment02\src\main\scala\task2_implementing_and_using_extended_F1LAE\ExtendedF1LAE.scala:45:66: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: If0(_, _, _)[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def subst(expr: F1LAE, substId: Symbol, value: F1LAE): F1LAE = expr match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

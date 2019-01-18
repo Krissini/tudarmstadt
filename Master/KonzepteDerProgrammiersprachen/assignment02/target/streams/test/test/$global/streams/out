@@ -1,0 +1,5 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(task1_de_brujin_indices.DeBrujinTest, org.scalatest.tools.Framework$$anon$1@3dde65c, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(task3_zip.ZipTest, org.scalatest.tools.Framework$$anon$1@3dde65c, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(task2_implementing_and_using_extended_F1LAE.FibonacciTest, org.scalatest.tools.Framework$$anon$1@3dde65c, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(task4_multiple_arguments.MultipleArgumentsTest, org.scalatest.tools.Framework$$anon$1@3dde65c, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(task2_implementing_and_using_extended_F1LAE.ExtendedF1LAETest, org.scalatest.tools.Framework$$anon$1@3dde65c, false, [SuiteSelector])[0m

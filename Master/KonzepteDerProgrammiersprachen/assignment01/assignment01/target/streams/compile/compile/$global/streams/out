@@ -1,0 +1,5 @@
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\fredd\Desktop\KonzepteDerProgrammiersprachen\assignment01\assignment01\src\main\scala\task2_Preprocessor.scala:25:61: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: And(_, _), Not(_), Or(_, _)[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def preproc(expr: BooleanExpression): BooleanExpression = expr match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

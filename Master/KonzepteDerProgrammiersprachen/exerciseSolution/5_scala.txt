@@ -1,0 +1,215 @@
+task 1:
+package de.tuda.copl
+
+object Task0 {
+  sealed trait Value
+
+  sealed trait FE
+  case class Id(name: Symbol) extends FE
+  case class Fun(param: Symbol, body: FE) extends FE with Value
+  case class App(funExp: FE, arg: FE) extends FE
+
+  def freeVariables(expr : FE) : Set[Symbol] = expr match {
+	  case Id(x) => Set(x)
+	  case Fun(param, body) => freeVariables(body) - param
+	  case App(e1, e2) => freeVariables(e1) ++ freeVariables(e2)
+  }
+
+  def subst(expr: FE, substId: Symbol, value: FE): FE = expr match {
+    case Id(name) =>
+	    if (substId == name) value
+	    else expr
+
+    case Fun(param, body) =>
+	    if (param == substId)
+		    Fun(param, body)
+	    else if (!freeVariables(value).contains(param))
+	      Fun(param, subst(body, substId, value))
+	    else
+		    sys.error("Can only substitute expression if the value does not contain the parameter as free variable")
+
+
+    case App(funExpr, argExpr) =>
+      App(subst(funExpr, substId, value), subst(argExpr, substId, value))
+  }
+
+
+  def interp(expr: FE): Value = expr match {
+    case Id(name) => sys.error("found unbound id " + name)
+    
+    case f@Fun(_, _) => f
+
+    case App(funExpr, argExpr) => interp(funExpr) match {
+      case Fun(param, body) => interp(subst(body, param, argExpr))
+      case v1 => sys.error(s"Expected function value but got $v1")
+    }
+  }
+
+	// some assertions on the interpreter
+	import scala.language.implicitConversions
+	implicit def symbolToFE(symbol: Symbol) : Id = Id(symbol)
+
+
+	//Data definitions
+	def T : FE = Fun('x, Fun('y, 'x)) //true
+	def F : FE = Fun('x, Fun('y, 'y)) //false
+
+	def ifte(cond : FE, thenBranch : FE, elseBranch : FE) : FE =
+		App(App(cond, thenBranch), elseBranch)
+
+	def not(e : FE) : FE = ifte(e, F, T)
+
+	def and(e1 : FE, e2 : FE) : FE = ifte(e1, ifte(e2, T, F), F)
+	def or(e1 : FE, e2 : FE) : FE = ifte(e1, T, ifte(e2, T, F))
+
+
+	/* Task 0, 1 */
+	def union(s1 : FE, s2 : FE) : FE = Fun('e, or(App(s1, 'e), App(s2, 'e)))
+	def intersect(s1 : FE, s2 : FE) : FE = Fun('e, and(App(s1, 'e), App(s2, 'e)))
+
+	/* Task 0, 2 */
+	//Russel's set
+	def R : FE = Fun('s, not(App('s, 's)))
+
+
+	def main(args : Array[String]): Unit = {
+		val isRinR = App(R, R) //Is R element of R?
+
+		val res = interp(isRinR)
+		println(res)
+	}
+
+}
+
+task 2:
+package de.tuda.copl
+
+object Task1 {
+  sealed trait Value extends FE
+
+  sealed trait FE
+	case class Id(name: Symbol) extends FE
+	case class Fun(param: Symbol, body: FE) extends FE with Value
+	case class App(funExp: FE, arg: FE) extends FE
+	//Extension of FE with arithmetic expressions
+	case class Num(n: Int) extends FE with Value
+	case class Add(lhs: FE, rhs: FE) extends FE
+	case class Sub(lhs: FE, rhs: FE) extends FE
+	case class Mul(lhs: FE, rhs: FE) extends FE
+	case class If0(cond : FE, thenBranch : FE, elseBranch : FE) extends FE
+
+  def freeVariables(expr : FE) : Set[Symbol] = expr match {
+	  case Id(x) => Set(x)
+	  case Fun(param, body) => freeVariables(body) - param
+	  case App(e1, e2) => freeVariables(e1) ++ freeVariables(e2)
+
+	  case Num(_) => Set.empty
+	  case Add(e1, e2) => freeVariables(e1) ++ freeVariables(e2)
+	  case Sub(e1, e2) => freeVariables(e1) ++ freeVariables(e2)
+	  case Mul(e1, e2) => freeVariables(e1) ++ freeVariables(e2)
+	  case If0(c, t, e) => freeVariables(c) ++ freeVariables(t) ++ freeVariables(e)
+  }
+
+  def subst(expr: FE, substId: Symbol, value: FE): FE = expr match {
+	  case Id(name) =>
+		  if (substId == name) value
+		  else expr
+
+	  case Fun(param, body) =>
+		  if (param == substId)
+			  Fun(param, body)
+		  else if (!freeVariables(value).contains(param))
+			  Fun(param, subst(body, substId, value))
+		  else
+			  sys.error("Can only substitute expression if the value does not contain the parameter as free variable")
+
+	  case App(funExpr, argExpr) =>
+		  App(subst(funExpr, substId, value), subst(argExpr, substId, value))
+
+	  case Num(_) => expr
+
+	  case Add(lhs, rhs) =>
+		  Add(subst(lhs, substId, value), subst(rhs, substId, value))
+
+	  case Sub(lhs, rhs) =>
+		  Sub(subst(lhs, substId, value), subst(rhs, substId, value))
+
+	  case Mul(lhs, rhs) =>
+		  Mul(subst(lhs, substId, value), subst(rhs, substId, value))
+
+	  case If0(c, t, e) =>
+		  If0(subst(c, substId, value), subst(t, substId, value), subst(e, substId, value))
+  }
+
+
+  def interp(expr: FE): Value = expr match {
+	  case Id(name) => sys.error("found unbound id " + name)
+
+	  case f@Fun(_, _) => f
+
+	  case App(funExpr, argExpr) => interp(funExpr) match {
+		  case Fun(param, body) => interp(subst(body, param, argExpr))
+		  case v1 => sys.error(s"Expected function value but got $v1")
+	  }
+
+	  case n@Num(_) => n
+
+	  case Add(lhs, rhs) => (interp(lhs), interp(rhs)) match {
+		  case (Num(n1), Num(n2)) => Num(n1 + n2)
+		  case x => sys.error(s"expected num but got: $x")
+	  }
+	  case Sub(lhs, rhs) => (interp(lhs), interp(rhs)) match {
+		  case (Num(n1), Num(n2)) => Num(n1 - n2)
+		  case x => sys.error(s"expected num but got: $x")
+	  }
+
+	  case Mul(lhs, rhs) => (interp(lhs), interp(rhs)) match {
+		  case (Num(n1), Num(n2)) => Num(n1 * n2)
+		  case x => sys.error(s"expected num but got: $x")
+	  }
+
+	  case If0(c, t, e) => interp(c) match {
+	    case Num(0) => interp(t)
+	    case _ => interp(e)
+	  }
+  }
+
+	// some assertions on the interpreter
+	import scala.language.implicitConversions
+	implicit def symbolToFE(symbol: Symbol) : Id = Id(symbol)
+	implicit def intToFE(i: Int) : Num = Num(i)
+
+
+	/* Task 2, 1 */
+	val omega = App(Fun('x, App('x, 'x)), Fun('x, App('x, 'x)))
+
+
+	//Fixpoint combinator
+	def fix[A,B](f: (A => B) => A => B): A => B =
+		(x:A) => f(fix(f))(x)
+
+	// Y combinator
+	val innerY = Fun('x, App('f, App('x, 'x)))
+	val Y = Fun('f, App(innerY, innerY))
+
+	val factorialFLAE = Fun('fact, Fun('n,
+		If0('n, 1, Mul('n, App('fact, Sub('n, 1))))
+	))
+
+	def main(args : Array[String]): Unit = {
+
+		def factorial : Int => Int = fix (
+			(fact: Int => Int)  => (n:Int) => if (n <= 1) 1 else n * fact(n-1)
+		)
+
+		println(factorial(5))
+
+		val fact5 = App(App(Y, factorialFLAE), 5)
+		println(interp(fact5))
+	}
+  
+
+
+
+
+}
